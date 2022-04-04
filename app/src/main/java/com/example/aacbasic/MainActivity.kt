@@ -37,12 +37,24 @@ class MainActivity : AppCompatActivity() {
         val factory = MyViewModelFactory(100, this)
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
         val myViewModel : MyViewModel by viewModels { factory }
-        binding.textView.text = myViewModel.counter.toString()
-
+//        binding.textView.text = myViewModel.counter.toString()
+//
         binding.button.setOnClickListener {
-            myViewModel.counter += 1
-            myViewModel.saveState()
-            binding.textView.text = myViewModel.counter.toString()
+//            myViewModel.counter += 1
+//            myViewModel.saveState()
+//            binding.textView.text = myViewModel.counter.toString()
+
+            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+        }
+
+        // 라이브데이터 옵저빙
+        myViewModel.liveCounter.observe(this) { counter ->
+            binding.textView.text = counter.toString()
+        }
+
+        // 라이브데이터 값 변경
+        myViewModel.modifiedCounter.observe(this) { counter ->
+            binding.textView.text = counter
         }
     }
 }

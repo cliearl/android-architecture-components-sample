@@ -1,7 +1,6 @@
 package com.example.aacbasic
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 
 class MyViewModel(
     _counter : Int,
@@ -9,8 +8,12 @@ class MyViewModel(
 ): ViewModel() {
 
 //    var counter: Int = _counter
-
     var counter: Int = savedStateHandle.get<Int>(SAVE_STATE_KEY) ?: _counter
+
+    val liveCounter : MutableLiveData<Int> = MutableLiveData(_counter)
+    val modifiedCounter : LiveData<String> = Transformations.map(liveCounter) { counter ->
+        "$counter 입니다"
+    }
 
     fun saveState() {
         savedStateHandle.set(SAVE_STATE_KEY, counter)
