@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         // 팩토리 패턴을 통해 뷰모델에 초기값 적용
-        val factory = MyViewModelFactory(10, this)
+        val myRepositoryImpl = MyRepositoryImpl(100)
+        val factory = MyViewModelFactory(10, myRepositoryImpl, this)
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
         val myViewModel : MyViewModel by viewModels { factory }
 //        binding.textView.text = myViewModel.counter.toString()
@@ -49,17 +50,18 @@ class MainActivity : AppCompatActivity() {
 //            myViewModel.saveState()
 //            binding.textView.text = myViewModel.counter.toString()
 
-            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+//            myViewModel.liveCounter.value = myViewModel.liveCounter.value?.plus(1)
+            myViewModel.increaseCounter()
         }
 
-        // 라이브데이터 옵저빙
-        myViewModel.liveCounter.observe(this) { counter ->
-            binding.textView.text = counter.toString()
-        }
-
-        // 라이브데이터 값 변경
-        myViewModel.modifiedCounter.observe(this) { counter ->
-            binding.textView.text = counter
-        }
+//        // 라이브데이터 옵저빙
+//        myViewModel.liveCounter.observe(this) { counter ->
+//            binding.textView.text = counter.toString()
+//        }
+//
+//        // 라이브데이터 값 변경
+//        myViewModel.modifiedCounter.observe(this) { counter ->
+//            binding.textView.text = counter
+//        }
     }
 }
