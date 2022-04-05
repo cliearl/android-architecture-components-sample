@@ -15,6 +15,8 @@ class MyViewModel(
         "$counter 입니다"
     }
 
+    val hasChecked : MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+
     fun saveState() {
         savedStateHandle.set(SAVE_STATE_KEY, counter)
     }

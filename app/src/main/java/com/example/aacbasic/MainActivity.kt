@@ -3,16 +3,18 @@ package com.example.aacbasic
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.example.aacbasic.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+//    private val binding: ActivityMainBinding by lazy {
+//        ActivityMainBinding.inflate(layoutInflater)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+//        setContentView(binding.root)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         // 리셋되는 카운터
 //        var counter = 100
@@ -34,11 +36,14 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         // 팩토리 패턴을 통해 뷰모델에 초기값 적용
-        val factory = MyViewModelFactory(100, this)
+        val factory = MyViewModelFactory(10, this)
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
         val myViewModel : MyViewModel by viewModels { factory }
 //        binding.textView.text = myViewModel.counter.toString()
-//
+
+        binding.lifecycleOwner = this
+        binding.viewmodel = myViewModel
+
         binding.button.setOnClickListener {
 //            myViewModel.counter += 1
 //            myViewModel.saveState()
